@@ -1,10 +1,19 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection} from 'angularfire2/firestore';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+//import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+
 //import { Person } from '../mock/person-mock.json';
 
 //import 'rxjs/add/operator/map';
 
+interface IPerson{
+  "ID": number;
+    "FirstName": string;
+    "LastName": string;
+}
 @Component({
   selector: 'app-report-a',
   templateUrl: './report-a.component.html',
@@ -28,6 +37,9 @@ export class ReportAComponent implements OnDestroy, OnInit {
     "LastName": "Abramov"
   }
 ];
+
+  personsCollection!: AngularFirestoreCollection<IPerson>;
+  personsFB!: Observable<IPerson[]>;
   // dtOptions: DataTables.Settings = {};
   //persons: Person[] = [];
 
@@ -35,9 +47,11 @@ export class ReportAComponent implements OnDestroy, OnInit {
   // thus we ensure the data is fetched before rendering
   dtTrigger: Subject<any> = new Subject<any>();
 
-  constructor(){}//private httpClient: HttpClient) { }
+  constructor(private afs: AngularFirestore){}//private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+    this.personsCollection = this.afs.collection('persons')
+    this.personsFB = this.personsCollection.valueChanges();
    /*   this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 2

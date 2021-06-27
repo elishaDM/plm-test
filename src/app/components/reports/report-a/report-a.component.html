@@ -16,3 +16,9 @@
      
     </tbody>
   </table>
+
+  <div *ngFor="let p of personsFB | async">
+    <p>{{p | json}}</p>
+  </div>
+  
+
