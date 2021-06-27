@@ -1,0 +1,18 @@
+<p>דוח א</p>
+<table datatable class="row-border hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>שם פרטי</th>
+        <th>שם משפחה</th>
+      </tr>
+    </thead>
+    <tbody>
+       <tr *ngFor="let p of persons">
+        <td>{{p.ID}}</td>
+        <td>{{p.FirstName}}</td>
+        <td>{{p.LastName}}</td>
+      </tr> 
+     
+    </tbody>
+  </table>
